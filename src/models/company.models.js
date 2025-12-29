@@ -171,7 +171,7 @@ const saveCompanyData = async (companySlug, companyName, brandTheme, sections) =
 const getCompanyByName = async (companyName) => {
   try {
     const rows = await sql`
-      SELECT id, name, slug FROM companies WHERE name = ${companyName}
+      SELECT id, name, slug FROM companies WHERE LOWER(name) = LOWER(${companyName})
     `;
     return rows[0] || null;
   } catch (error) {

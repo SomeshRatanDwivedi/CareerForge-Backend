@@ -5,10 +5,7 @@ import postgres from 'postgres';
 
 const connectionString = process.env.DATABASE_URL;
 if(!connectionString)throw new Error('Databse connection string is not available.')
-const sql = postgres(process.env.DATABASE_URL, {
-  ssl: { rejectUnauthorized: false },
-  family: 4, // 🔥 FORCE IPv4
-});
+const sql = postgres(connectionString);
 
 (async () => {
   try {
