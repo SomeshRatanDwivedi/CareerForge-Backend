@@ -4,6 +4,13 @@ import { generateUniqueSlug } from "../utils/index.js";
 const getCompanySettings = async (req, res) => {
   try {
     const { companySlug } = req.params;
+    const company = await companyModels.getCompanyBySlug(companySlug);
+    if (!company) {
+      return res.status(404).json({
+        success: false,
+        message: "Company not found",
+      });
+    }
     const settings = await companyModels.getCompanySettings(companySlug);
     res.status(200).json({ success: true, data: settings });
   } catch (error) {
@@ -32,7 +39,7 @@ const loginCompany = async (req, res) => {
     if (company) {
       res.status(200).json({ success: true, data: company });
     } else {
-     //create new company if not exists
+      //create new company if not exists
       const companySlug = await generateUniqueSlug(companyName);
       const newCompany = await companyModels.addNewCompany(companyName, companySlug);
       res.status(200).json({ success: true, data: newCompany });

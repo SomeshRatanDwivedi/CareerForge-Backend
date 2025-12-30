@@ -190,6 +190,16 @@ const addNewCompany = async (companyName, companySlug) => {
     throw error;
   }
 };
+const getCompanyBySlug=async (companySlug) => {
+  try {
+    const rows = await sql`
+      SELECT id, name, slug FROM companies WHERE slug = ${companySlug}
+    `;
+    return rows[0] || null;
+  } catch (error) {
+    throw error;
+  }
+};
 
 
 export default {
@@ -197,4 +207,5 @@ export default {
   saveCompanyData,
   getCompanyByName,
   addNewCompany,
+  getCompanyBySlug
 };
